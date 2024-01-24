@@ -27,8 +27,8 @@
 //向 index  提交节点地址的频率限制 默认为 20秒
 #define GNB_POST_ADDR_LIMIT_SEC        20
 
-//向 index node 请求节点地址时间间隔，默认为 25 秒
-#define GNB_REQUEST_ADDR_INTERVAL_SEC   25
+//向 index node 请求节点地址时间间隔，默认为 39 秒
+#define GNB_REQUEST_ADDR_INTERVAL_SEC   39
 
 //节点向index 节点请求地址的频率限制 默认为 20毫秒
 #define GNB_REQUEST_ADDR_LIMIT_USEC     1000*20
@@ -60,11 +60,11 @@ typedef struct _post_addr_frame_t {
 		uint64_t src_ts_usec;            //发送方的时间戳,可选
 
 		//源节点对自身探测的wan地址
-		uint8_t  wan_addr6[16];
-		uint16_t port6;
+		uint8_t  wan6_addr[16];
+		uint16_t wan6_port;
 
-		uint8_t  wan_addr4[4];
-		uint16_t port4;
+		uint8_t  wan4_addr[4];
+		uint16_t wan4_port;
 
 		/* 节点提交地址时生成一组随机数，然后对这组随机数进行数字签名
 		 * index 节点会保存最后收到的 node_random_sequence，node_random_sequence_sign
