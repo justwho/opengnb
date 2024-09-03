@@ -85,6 +85,8 @@ static void pf_init_cb(gnb_core_t *gnb_core, gnb_pf_t *pf){
 
     pf->private_ctx = ctx;
 
+    GNB_LOG1(gnb_core->log, GNB_LOG_ID_PF, "%s init\n", pf->name);
+
 }
 
 
@@ -140,7 +142,6 @@ static int pf_tun_route_cb(gnb_core_t *gnb_core, gnb_pf_t *pf, gnb_pf_ctx_t *pf_
         GNB_LOG3(gnb_core->log, GNB_LOG_ID_PF, "Deflate Skip in payload size=%d deflate chunk size=%d\n", in_payload_data_len, deflate_chunk_size);
         goto skip_deflate;
     }
-
 
     GNB_LOG3(gnb_core->log, GNB_LOG_ID_PF, "Deflate in payload size=%d deflate_chunk_size=%d\n", in_payload_data_len, deflate_chunk_size);
 

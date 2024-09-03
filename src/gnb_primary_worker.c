@@ -210,12 +210,12 @@ static void handle_ur1_frame(gnb_core_t *gnb_core, gnb_payload16_t *payload){
         return;
     }
 
-    uint32_t dst_uuid32 = ntohl(ur1_frame_head->dst_uuid32);
+    gnb_uuid_t dst_uuid64 = gnb_ntohll(ur1_frame_head->dst_uuid64);
 
     //to gnb node or ur1 node
-    if ( dst_uuid32 != gnb_core->local_node->uuid32 ) {
+    if ( dst_uuid64 != gnb_core->local_node->uuid64 ) {
 
-        relay_node = (gnb_node_t *)GNB_HASH32_UINT32_GET_PTR(gnb_core->uuid_node_map, dst_uuid32);
+        relay_node = (gnb_node_t *)GNB_HASH32_UINT64_GET_PTR(gnb_core->uuid_node_map, dst_uuid64);
 
         if ( NULL==relay_node ) {
             return;
@@ -370,11 +370,11 @@ skip_tun:
 
         } else {
 
-        receive_queue_data->type = GNB_WORKER_QUEUE_DATA_TYPE_NODE_IN;
-        memcpy(&receive_queue_data->data.node_in.node_addr_st, &node_addr_st, sizeof(gnb_sockaddress_t));
-        receive_queue_data->data.node_in.socket_idx = socket_idx;
-        gnb_ring_buffer_fixed_push_submit(pf_worker->ring_buffer_in);
-        pf_worker->notify(pf_worker);
+            receive_queue_data->type = GNB_WORKER_QUEUE_DATA_TYPE_NODE_IN;
+            memcpy(&receive_queue_data->data.node_in.node_addr_st, &node_addr_st, sizeof(gnb_sockaddress_t));
+            receive_queue_data->data.node_in.socket_idx = socket_idx;
+            gnb_ring_buffer_fixed_push_submit(pf_worker->ring_buffer_in);
+            pf_worker->notify(pf_worker);
 
         }
 
